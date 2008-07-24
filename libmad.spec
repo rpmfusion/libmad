@@ -1,6 +1,6 @@
 Name:           libmad
 Version:        0.15.1b
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        MPEG audio decoder library
 
 Group:          System Environment/Libraries
@@ -90,6 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 24 2008 David Juran <david@juran.se> - 0.15.1b-7
+- Bump release for RpmFusion
+
 * Tue Feb 19 2008 David Juran <david@juran.se> - 0.15.1b-6
 - use $RPM_OPT_FLAGS - Bz 1873
 
