@@ -1,6 +1,6 @@
 Name:           libmad
 Version:        0.15.1b
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        MPEG audio decoder library
 
 Group:          System Environment/Libraries
@@ -90,6 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jul 30 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.15.1b-8
+- rebuild for buildsys cflags issue
+
 * Thu Jul 24 2008 David Juran <david@juran.se> - 0.15.1b-7
 - Bump release for RpmFusion
 
