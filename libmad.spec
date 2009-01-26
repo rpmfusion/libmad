@@ -1,13 +1,19 @@
 Name:           libmad
 Version:        0.15.1b
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        MPEG audio decoder library
 
 Group:          System Environment/Libraries
 License:        GPLv2
 URL:            http://www.underbit.com/products/mad/
 Source0:        http://download.sourceforge.net/mad/%{name}-%{version}.tar.gz
+Patch0: 	libmad-0.15.1b-multiarch.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
+
+BuildRequires:	automake
+BuildRequires:	autoconf
+BuildRequires:	libtool
+
 
 %description
 MAD is a high-quality MPEG audio decoder. It currently supports MPEG-1
@@ -27,8 +33,9 @@ Requires:       pkgconfig
 
 %prep
 %setup -q
+%patch0 -p1 -b .multiarch
 sed -i -e /-fforce-mem/d configure* # -fforce-mem gone in gcc 4.2, noop earlier
-touch -r aclocal.m4 configure.ac
+touch -r aclocal.m4 configure.ac NEWS AUTHORS ChangeLog
 
 # Create an additional pkgconfig file
 %{__cat} << EOF > mad.pc
@@ -48,7 +55,7 @@ EOF
 
 
 %build
-
+autoreconf -sfi
 %configure \
 %ifarch x86_64 ia64
     --enable-fpm=64bit \
@@ -90,6 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jan 25 2009 David Juran <david@juran.se> - 0.15.1b-9
+- fix multiarch (Bz 264)
+
 * Wed Jul 30 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.15.1b-8
 - rebuild for buildsys cflags issue
 
