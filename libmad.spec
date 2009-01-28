@@ -1,6 +1,6 @@
 Name:           libmad
 Version:        0.15.1b
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        MPEG audio decoder library
 
 Group:          System Environment/Libraries
@@ -67,13 +67,12 @@ autoreconf -sfi
 
 make %{?_smp_mflags} CPPFLAGS="$RPM_OPT_FLAGS"
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{__install} -D -p -m 0644 mad.pc %{buildroot}%{_libdir}/pkgconfig/mad.pc
-
+touch -r mad.h.sed %{buildroot}/%{_includedir}/mad.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -97,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jan 28 2009 David Juran <david@juran.se> - 0.15.1b-10
+- fix timestamps (Bz 264)
+
 * Sun Jan 25 2009 David Juran <david@juran.se> - 0.15.1b-9
 - fix multiarch (Bz 264)
 
