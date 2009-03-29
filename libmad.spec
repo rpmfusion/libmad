@@ -1,6 +1,6 @@
 Name:           libmad
 Version:        0.15.1b
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        MPEG audio decoder library
 
 Group:          System Environment/Libraries
@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.15.1b-11
+- rebuild for new F11 features
+
 * Wed Jan 28 2009 David Juran <david@juran.se> - 0.15.1b-10
 - fix timestamps (Bz 264)
 
