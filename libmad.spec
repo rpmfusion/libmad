@@ -1,6 +1,6 @@
 Name:           libmad
 Version:        0.15.1b
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        MPEG audio decoder library
 
 Group:          System Environment/Libraries
@@ -57,7 +57,7 @@ EOF
 %build
 autoreconf -sfi
 %configure \
-%ifarch x86_64 ia64
+%ifarch x86_64 ia64 ppc64
     --enable-fpm=64bit \
 %endif
     --disable-dependency-tracking \
@@ -96,6 +96,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jul  1 2009 David Juran <david@juran.se> - 0.15.1b-12
+- fix typo in multiarch patch
+- fix ppc64 version (Bz 691)
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.15.1b-11
 - rebuild for new F11 features
 

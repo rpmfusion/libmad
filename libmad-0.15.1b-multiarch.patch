@@ -18,11 +18,11 @@ diff -up libmad-0.15.1b/Makefile.am.orig libmad-0.15.1b/Makefile.am
 +	echo "# endif"; \
 +	echo "#ifdef __powerpc__"; \
 +	echo "#define FPM_PPC"; \
-+	echo "#define LIZEOF_LONG 4"; \
++	echo "#define SIZEOF_LONG 4"; \
 +	echo "#endif"; \
 +	echo "#ifdef __powerpc64__"; \
 +	echo "#define FPM_PPC"; \
-+	echo "#define LIZEOF_LONG 8"; \
++	echo "#define SIZEOF_LONG 8"; \
 +	echo "#endif"; echo; \
  	sed -ne 's/^# *define  *\(HAVE_.*_ASM\).*/# define \1/p'  \
  		config.h; echo;  \
