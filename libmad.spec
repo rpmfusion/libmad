@@ -1,14 +1,15 @@
-Name:           libmad
-Version:        0.15.1b
-Release:        12%{?dist}
-Summary:        MPEG audio decoder library
+Name:		libmad
+Version:	0.15.1b
+Release:	13%{?dist}
+Summary:	MPEG audio decoder library
 
-Group:          System Environment/Libraries
-License:        GPLv2
-URL:            http://www.underbit.com/products/mad/
-Source0:        http://download.sourceforge.net/mad/%{name}-%{version}.tar.gz
-Patch0: 	libmad-0.15.1b-multiarch.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
+Group:		System Environment/Libraries
+License:	GPLv2
+URL:		http://www.underbit.com/products/mad/
+Source0:	http://download.sourceforge.net/mad/%{name}-%{version}.tar.gz
+Patch0:		libmad-0.15.1b-multiarch.patch
+Patch1:		libmad-0.15.1b-ppc.patch
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires:	automake
 BuildRequires:	autoconf
@@ -22,18 +23,20 @@ so-called MPEG 2.5 format. All three audio layers (Layer I, Layer II,
 and Layer III a.k.a. MP3) are fully implemented.
 
 %package        devel
-Summary:        MPEG audio decoder library development files
-Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
-Requires:       pkgconfig
+Summary:	MPEG audio decoder library development files
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	pkgconfig
 
-%description    devel
+%description	devel
 %{summary}.
 
 
 %prep
 %setup -q
 %patch0 -p1 -b .multiarch
+%patch1 -p1 -b .ppc
+
 sed -i -e /-fforce-mem/d configure* # -fforce-mem gone in gcc 4.2, noop earlier
 touch -r aclocal.m4 configure.ac NEWS AUTHORS ChangeLog
 
@@ -58,12 +61,12 @@ EOF
 autoreconf -sfi
 %configure \
 %ifarch x86_64 ia64 ppc64
-    --enable-fpm=64bit \
+	--enable-fpm=64bit \
 %endif
-    --disable-dependency-tracking \
-    --enable-accuracy \
-    --disable-debugging \
-    --disable-static    
+	--disable-dependency-tracking \
+	--enable-accuracy \
+	--disable-debugging \
+	--disable-static    
 
 make %{?_smp_mflags} CPPFLAGS="$RPM_OPT_FLAGS"
 
@@ -96,6 +99,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jul 19 2009 David Juran <david@juran.se> - 0.15.1b-13
+- ppc asm patch from David Woodhouse (Bz 730)
+- rpmlint warnings
+
 * Wed Jul  1 2009 David Juran <david@juran.se> - 0.15.1b-12
 - fix typo in multiarch patch
 - fix ppc64 version (Bz 691)
