@@ -1,6 +1,6 @@
 Name:		libmad
 Version:	0.15.1b
-Release:	13%{?dist}
+Release:	13%{?dist}.1
 Summary:	MPEG audio decoder library
 
 Group:		System Environment/Libraries
@@ -99,6 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Oct 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 0.15.1b-13.1
+- Rebuilt for target i686
+
 * Sun Jul 19 2009 David Juran <david@juran.se> - 0.15.1b-13
 - ppc asm patch from David Woodhouse (Bz 730)
 - rpmlint warnings
