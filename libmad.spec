@@ -1,6 +1,6 @@
 Name:		libmad
 Version:	0.15.1b
-Release:	14%{?dist}
+Release:	15%{?dist}
 Summary:	MPEG audio decoder library
 
 Group:		System Environment/Libraries
@@ -9,6 +9,10 @@ URL:		http://www.underbit.com/products/mad/
 Source0:	http://download.sourceforge.net/mad/%{name}-%{version}.tar.gz
 Patch0:		libmad-0.15.1b-multiarch.patch
 Patch1:		libmad-0.15.1b-ppc.patch
+#https://bugs.launchpad.net/ubuntu/+source/libmad/+bug/534287
+Patch2:         Provide-Thumb-2-alternative-code-for-MAD_F_MLN.diff
+#https://bugs.launchpad.net/ubuntu/+source/libmad/+bug/513734
+Patch3:         libmad.thumb.diff
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires:	automake
@@ -34,8 +38,12 @@ Requires:	pkgconfig
 
 %prep
 %setup -q
+%ifarch %{ix86} x86_64 ppc ppc64
 %patch0 -p1 -b .multiarch
+%endif
 %patch1 -p1 -b .ppc
+%patch2 -p1 -b .alt_t2
+%patch3 -p1 -b .thumb
 
 sed -i -e /-fforce-mem/d configure* # -fforce-mem gone in gcc 4.2, noop earlier
 touch -r aclocal.m4 configure.ac NEWS AUTHORS ChangeLog
@@ -60,8 +68,11 @@ EOF
 %build
 autoreconf -sfi
 %configure \
-%ifarch x86_64 ia64 ppc64
+%if %{__isa_bits} == 64
 	--enable-fpm=64bit \
+%endif
+%ifarch %{arm}
+        --enable-fpm=arm \
 %endif
 	--disable-dependency-tracking \
 	--enable-accuracy \
@@ -99,6 +110,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Apr 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 0.15.1b-15
+- Don't use multiarch patch when the result is not hardcoded
+- Update FPM
+- Add patches from lp#534287 and lp#534287
+
 * Wed Jan 25 2012 Nicolas Chauvet <kwizart@gmail.com> - 0.15.1b-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
