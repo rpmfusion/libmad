@@ -68,7 +68,7 @@ EOF
 %build
 autoreconf -sfi
 %configure \
-%if %{__isa_bits} == 64
+%if 0%{?__isa_bits} == 64
 	--enable-fpm=64bit \
 %endif
 %ifarch %{arm}
