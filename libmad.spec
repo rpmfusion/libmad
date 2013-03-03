@@ -1,6 +1,6 @@
 Name:		libmad
 Version:	0.15.1b
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	MPEG audio decoder library
 
 Group:		System Environment/Libraries
@@ -110,6 +110,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Mar 03 2013 Nicolas Chauvet <kwizart@gmail.com> - 0.15.1b-16
+- Mass rebuilt for Fedora 19 Features
+
 * Sat Apr 28 2012 Nicolas Chauvet <kwizart@gmail.com> - 0.15.1b-15
 - Don't use multiarch patch when the result is not hardcoded
 - Update FPM
